@@ -1,0 +1,20 @@
+from django.contrib import admin
+from . import models
+
+admin.site.register(models.Suppliers)
+admin.site.register(models.Transporters)
+admin.site.register(models.Vehicle)
+admin.site.register(models.Commodity)
+admin.site.register(models.Employees)
+admin.site.register(models.Shifts)
+admin.site.register(models.Operators)
+admin.site.register(models.WeighStages)
+admin.site.register(models.Tickets)
+admin.site.register(models.ConnectionsSerial)
+admin.site.register(models.ConnectionsEtho)
+admin.site.register(models.ShiftsRecords)
+admin.site.register(models.Weighbridges)
+admin.site.register(models.Customers)
+admin.site.register(models.Accounts)
+admin.site.register(models.Destination)
+admin.site.register(models.Origin)
