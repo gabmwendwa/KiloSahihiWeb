@@ -11,7 +11,7 @@ class Cooperatives(models.Model):
         verbose_name_plural = "Cooperatives"
 
 class Produce(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     reg_date  = models.DateTimeField(auto_now_add=True, blank=True)
     status = models.CharField(max_length=10)
     def __str__ (self):
@@ -20,7 +20,7 @@ class Produce(models.Model):
         verbose_name_plural = "Produce"
 
 class Factories(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     product = models.ForeignKey(Produce,on_delete=models.CASCADE,null=True)
     cooperative =  models.ForeignKey(Cooperatives,on_delete=models.CASCADE,null=True)
     reg_date  = models.DateTimeField(auto_now_add=True, blank=True)
@@ -43,10 +43,10 @@ class Devices(models.Model):
 
 class Clerk(models.Model):
     name = models.CharField(max_length=50)
-    national_id  = models.CharField(max_length=50)
-    username  = models.CharField(max_length=50)
+    national_id  = models.CharField(max_length=50, unique=True)
+    username  = models.CharField(max_length=50, unique=True)
     password  = models.CharField(max_length=50)
-    phone_number  = models.CharField(max_length=50)
+    phone_number  = models.CharField(max_length=50, unique=True)
     factory = models.ForeignKey(Factories,on_delete=models.CASCADE,null=True)
     reg_date = models.DateTimeField(auto_now_add=True, blank=True)
     status = models.CharField(max_length=10)
@@ -57,10 +57,10 @@ class Clerk(models.Model):
 
 class Farmers(models.Model):
     name = models.CharField(max_length=50)
-    national_id  = models.CharField(max_length=50)
-    username  = models.CharField(max_length=50)
+    national_id  = models.CharField(max_length=50, unique=True)
+    username  = models.CharField(max_length=50, unique=True)
     password  = models.CharField(max_length=50)
-    phone_number  = models.CharField(max_length=50)
+    phone_number  = models.CharField(max_length=50, unique=True)
     bank_branch  = models.CharField(max_length=50)
     bank_account_name  = models.CharField(max_length=50)
     bank_account  = models.CharField(max_length=50)
