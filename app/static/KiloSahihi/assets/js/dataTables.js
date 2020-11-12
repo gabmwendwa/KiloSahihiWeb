@@ -15,7 +15,7 @@ function getFarmerList() {
                 var tabledata = "";
                 if (data.length) {
                     for (var i = 0; i < data.length; i++) {
-                        tabledata += '<tr class="gradeA">';
+                        tabledata += '<tr class="gradeA pointer" title="' + data[i]["name"] + '." onclick="window.open(\''+applink.trim()+'settings/farmer/' + data[i]["id"] + '/\', \'_self\')">';
                         tabledata += '<td>#</td>';
                         tabledata += '<td>' + data[i]["name"] + '</td>';
                         tabledata += '<td>' + data[i]["username"] + '</td>';
@@ -49,7 +49,7 @@ function getFactoriesList() {
                 var tabledata = "";
                 if (data.length) {
                     for (var i = 0; i < data.length; i++) {
-                        tabledata += '<tr class="gradeA">';
+                        tabledata += '<tr class="gradeA pointer" title="' + data[i]["name"] + '." onclick="window.open(\''+applink.trim()+'settings/factory/' + data[i]["id"] + '/\', \'_self\')">';
                         tabledata += '<td>#</td>';
                         tabledata += '<td>' + data[i]["name"] + '</td>';
                         tabledata += '<td>' + data[i]["product"]["name"] + '</td>';
@@ -76,11 +76,38 @@ function getDeviceList() {
                 var tabledata = "";
                 if (data.length) {
                     for (var i = 0; i < data.length; i++) {
-                        tabledata += '<tr class="gradeA">';
+                        tabledata += '<tr class="gradeA pointer" title="' + data[i]["name"] + '." onclick="window.open(\''+applink.trim()+'settings/device/' + data[i]["id"] + '/\', \'_self\')">';
                         tabledata += '<td>#</td>';
                         tabledata += '<td>' + data[i]["name"] + '</td>';
                         tabledata += '<td>' + data[i]["imei"] + '</td>';
                         tabledata += '<td>' + data[i]["factory"]["name"] + '</td>';
+                        tabledata += '</tr>';
+                    }
+                    tablebody.innerHTML = tabledata;
+                }
+                App.dataTables();
+                loadtable("#table4");
+            });
+        });
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+
+function getProductList() {
+    try {
+        fetch("http://localhost:8003/api/produce", { method: 'get', headers: getheaders, }).then((resp) => {
+            resp.json().then((data) => {
+                var tabledata = "";
+                if (data.length) {
+                    for (var i = 0; i < data.length; i++) {
+                        tabledata += '<tr class="gradeA pointer" title="' + data[i]["name"] + '." onclick="window.open(\''+applink.trim()+'settings/product/' + data[i]["id"] + '/\', \'_self\')">';
+                        tabledata += '<td>#</td>';
+                        tabledata += '<td>' + data[i]["name"] + '</td>';
+                        tabledata += '<td>' + data[i]["status"] + '</td>';
+                        tabledata += '<td>' + data[i]["reg_date"] + '</td>';
                         tabledata += '</tr>';
                     }
                     tablebody.innerHTML = tabledata;
@@ -102,7 +129,7 @@ function getFROList() {
                 var tabledata = "";
                 if (data.length) {
                     for (var i = 0; i < data.length; i++) {
-                        tabledata += '<tr class="gradeA">';
+                        tabledata += '<tr class="gradeA pointer" title="' + data[i]["name"] + '." onclick="window.open(\''+applink.trim()+'settings/fro/' + data[i]["id"] + '/\', \'_self\')">';
                         tabledata += '<td>#</td>';
                         tabledata += '<td>' + data[i]["name"] + '</td>';
                         tabledata += '<td>' + data[i]["username"] + '</td>';
@@ -130,7 +157,8 @@ function getTransactionList() {
                 var tabledata = "";
                 if (data.length) {
                     for (var i = 0; i < data.length; i++) {
-                        tabledata += '<tr class="gradeA">';
+                        // tabledata += '<tr class="gradeA pointer" title="' + data[i]["name"] + '." onclick="window.open(\''+applink.trim()+'view/transaction/' + data[i]["id"] + '/\', \'_self\')">';
+                        tabledata += '<tr class="gradeA pointer" title="' + data[i]["name"] + '.">';
                         tabledata += '<td>#</td>';
                         tabledata += '<td>' + data[i]["tx_code"] + '</td>';
                         tabledata += '<td>' + data[i]["weight"] + '</td>';

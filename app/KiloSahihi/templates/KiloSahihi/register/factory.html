@@ -25,7 +25,7 @@
                     <h3>Register Factory</h3>
                 </div>
                 <div class="panel-body">
-                    <form id="register_form" data-form-name="register_factory" action="" method="post" class="form-horizontal group-border-dashed">
+                    <form id="register_form" action="" method="post" class="form-horizontal group-border-dashed">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-md-5 col-sm-5">
@@ -63,8 +63,10 @@
                         </div>
                         <div class="row">
                             <div class="text-right">
-                                <button type="submit" id="submit-btn" class="btn btn-space btn-primary">Submit</button>
-                                <button type="reset" class="btn btn-space btn-default">Cancel</button>
+                                <input type="hidden" name="status" id="status" value="Active">
+                                <button type="submit" id="submit-btn" data-form-name="register_factory" class="btn btn-space btn-primary">Submit</button>
+                                <button type="reset" class="btn btn-space btn-default" style="visibility: hidden;">Cancel</button>
+
                             </div>
                         </div>
                 </div>

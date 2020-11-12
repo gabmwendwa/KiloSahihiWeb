@@ -58,14 +58,14 @@
 	var pword = "";
 
 	function login() {
-		var dataoj = { "username": uname, "password": pword };
+		var dataobj = { "username": uname, "password": pword };
 
 		var myheaders = new Headers();
 		// myheaders.append("Authorization", "Token a7ecffc7330ff088d7b91f0c0b5d27036b19acfa")
 		myheaders.append("Content-Type", "application/json");
 
 		try {
-			fetch("http://localhost:8003/api/token/", { method: 'post', headers: myheaders, body: JSON.stringify(dataoj), }).then((resp) => {
+			fetch("http://localhost:8003/api/token/", { method: 'post', headers: myheaders, body: JSON.stringify(dataobj), }).then((resp) => {
 				resp.json().then((data) => {
 					if (data.token) {
 						localStorage.setItem("session_token", data.token);

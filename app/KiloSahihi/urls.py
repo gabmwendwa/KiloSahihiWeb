@@ -26,7 +26,9 @@ urlpatterns = [
     # path('register/officer/', kilo_views.register_fro, name='register_fro'),
     # path('register/farmer/', kilo_views.register_farmer, name='register_farmer'),
 
-    path('settings/<atype>/<int:pk>/', kilo_views.settings, name='settings'),
+    # path(r'^settings/<atype>/<int:theid>$', kilo_views.data_settings, name='data_settings'),
+
+    path('settings/<atype>/<int:theid>/', kilo_views.data_settings, name='data_settings'),
 
     # path('settings/cooperative/<int:pk>/', kilo_views.settings_coopperative, name='settings_coopperative'),
     # path('settings/factory/<int:pk>/', kilo_views.settings_factory, name='settings_factory'),
@@ -39,5 +41,6 @@ urlpatterns = [
     path('transactions/', kilo_views.transactions, name='transactions'),
     path('fro/', kilo_views.fro, name='fro'),
     path('devices/', kilo_views.devices, name='devices'),
-
+    path('products/', kilo_views.products, name='products'),
+    path('404/', kilo_views.page_not_found, name='page_not_found'),
 ]

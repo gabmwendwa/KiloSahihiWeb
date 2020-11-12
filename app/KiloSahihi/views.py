@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 #Page not found view
-atype_list = ['cooperative', 'factory', 'fro', 'farmer', 'device']
+atype_list = ['cooperative', 'factory', 'fro', 'farmer', 'device', 'product']
 
 def login(request):
 	context = {}
@@ -29,10 +29,12 @@ def register(request, atype):
 		return render(request, 'KiloSahihi/register/fro.html', context)
 	elif atype == 'device':
 		return render(request, 'KiloSahihi/register/device.html', context)
+	elif atype == 'product':
+		return render(request, 'KiloSahihi/register/product.html', context)
 	else:
-		return render(request, 'KiloSahihi/register/login.html', context)
+		return render(request, 'KiloSahihi/404.html', context)
 
-def settings(request, atype):
+def data_settings(request, atype, theid):
 	if atype not in atype_list:
 		return render(request, 'KiloSahihi/404.html')
 
@@ -45,8 +47,10 @@ def settings(request, atype):
 		return render(request, 'KiloSahihi/settings/fro.html', context)
 	elif atype == 'device':
 		return render(request, 'KiloSahihi/settings/device.html', context)
+	elif atype == 'product':
+		return render(request, 'KiloSahihi/settings/product.html', context)
 	else:
-		return render(request, 'KiloSahihi/settings/login.html', context)
+		return render(request, 'KiloSahihi/404.html', context)
 
 """
 def register_coopperative(request):
@@ -116,3 +120,11 @@ def fro(request):
 def devices(request):
 	context = {}
 	return render(request, 'KiloSahihi/devices.html', context)
+
+def products(request):
+	context = {}
+	return render(request, 'KiloSahihi/products.html', context)
+
+def page_not_found(request):
+	context = {}
+	return render(request, 'KiloSahihi/404.html', context)
