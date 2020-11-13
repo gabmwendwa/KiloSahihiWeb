@@ -15,7 +15,7 @@ SECRET_KEY = '7reb9d$g$mhgw0_)@y%+jh=$bnj9f*)v4zz1b4b-p+^^=zd8(d'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.104.229.106','127.0.0.1','192.168.11.19','localhost']
+ALLOWED_HOSTS = ['172.104.229.106','127.0.0.1','192.168.11.19','localhost','13.68.157.42']
 
 
 # Application definition
@@ -53,6 +53,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8081',
     'http://localhost:8002',
+    'http://13.68.157.42:8002',
 )
 
 ROOT_URLCONF = 'DjangoRestApi.urls'
