@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 ################################# KILOSAHIHI START #############################################
 class Cooperatives(models.Model):
@@ -44,6 +45,7 @@ class Devices(models.Model):
 class Clerk(models.Model):
     name = models.CharField(max_length=50)
     national_id  = models.CharField(max_length=50, unique=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,null=True)
     username  = models.CharField(max_length=50, unique=True)
     password  = models.CharField(max_length=50)
     phone_number  = models.CharField(max_length=50, unique=True)
@@ -80,8 +82,9 @@ class Transactions(models.Model):
     weight = models.CharField(max_length=50)
     total_payout = models.CharField(max_length=50)
     farmer = models.ForeignKey(Farmers,on_delete=models.CASCADE,null=True)
-    device = models.ForeignKey(Devices,on_delete=models.CASCADE,null=True)
+    device = models.CharField(max_length=100,null=True)
     produce = models.ForeignKey(Produce,on_delete=models.CASCADE,null=True)
+    clerk = models.ForeignKey(Clerk,on_delete=models.CASCADE,null=True)
     tx_date  = models.DateTimeField(auto_now_add=True, blank=True)
     status = models.CharField(max_length=10)
     def __str__ (self):
@@ -100,6 +103,18 @@ class Payment(models.Model):
         return self.name
     class Meta:
         verbose_name_plural = "Payment"
+
+class Audits(models.Model):
+    name = models.CharField(max_length=50)
+    # action = models.CharField(max_length=50)
+    action = models.TextField()
+    user = models.CharField(max_length=50)
+    status = models.CharField(max_length=10)
+    date = models.DateTimeField(auto_now_add=True, blank=True)
+    def __str__ (self):
+        return self.name
+    class Meta:
+        verbose_name_plural = "Audits"
 
 ############################# KILOSAHIHI END #############################################
 

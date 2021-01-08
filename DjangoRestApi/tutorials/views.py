@@ -3,7 +3,8 @@ from django.shortcuts import render
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status
- 
+from django.db.models import Sum
+
 from tutorials.models import *
 from tutorials.serializers import *
 from rest_framework.decorators import api_view
@@ -70,6 +71,68 @@ def tutorial_list_published(request):
 
  ################################### KILOSAHIHI  ################################### 
 
+ ###################################              USERS              ############################### 
+
+@api_view(['GET', 'POST', 'DELETE'])
+def users_list(request):
+    if request.method == 'GET':
+        users = User.objects.all()
+        
+        title = request.query_params.get('name', None)
+        if title is not None:
+           users = users.filter(name__icontains=name)
+        
+        users_serializer = UsersViewSerializer(users, many=True)
+        return JsonResponse(users_serializer.data, safe=False)
+        # 'safe=False' for objects serialization
+ 
+    elif request.method == 'POST':
+        users_data = JSONParser().parse(request)
+        users_serializer = UsersViewSerializer(data=users_data)
+        if users_serializer.is_valid():
+            users_serializer.save()
+            return JsonResponse(users_serializer.data, status=status.HTTP_201_CREATED) 
+        return JsonResponse(users_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'DELETE':
+        count = User.objects.all().delete()
+        return JsonResponse({'message': '{} Users were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)
+ 
+ 
+@api_view(['GET', 'PUT', 'DELETE'])
+def users_detail(request, pk):
+    try: 
+        users = User.objects.get(pk=pk) 
+    except User.DoesNotExist: 
+        return JsonResponse({'message': 'The user does not exist'}, status=status.HTTP_404_NOT_FOUND) 
+ 
+    if request.method == 'GET': 
+        users_serializer = UsersViewSerializer(users) 
+        return JsonResponse(users_serializer.data) 
+ 
+    elif request.method == 'PUT': 
+        users_data = JSONParser().parse(request) 
+        users_serializer = UsersViewSerializer(users, data=users_data)
+        if users_serializer.is_valid(): 
+            users_serializer.save() 
+            return JsonResponse(users_serializer.data) 
+        return JsonResponse(users_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+ 
+    elif request.method == 'DELETE': 
+        users.delete() 
+        return JsonResponse({'message': 'Users was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
+      
+@api_view(['GET'])
+
+def users_list_active(request):
+    users = User.objects.filter(status="Active")
+        
+    if request.method == 'GET': 
+        users_serializer = UsersViewSerializer(users, many=True)
+        return JsonResponse(users_serializer.data, safe=False)
+
+
+ ###################################               USERS              ############################### 
 
 
 
@@ -134,7 +197,73 @@ def cooperatives_list_active(request):
         return JsonResponse(cooperatives_serializer.data, safe=False)
 
 
- ###################################               COOPERATIVES               ############################### 
+ ###################################               COOPERATIVES               ###############################
+
+
+
+  ###################################              AUDITS              ############################### 
+
+@api_view(['GET', 'POST', 'DELETE'])
+def audits_list(request):
+    if request.method == 'GET':
+        audits = Audits.objects.all()
+        
+        title = request.query_params.get('name', None)
+        if title is not None:
+           audits = audits.filter(name__icontains=name)
+        
+        audits_serializer = AuditsViewSerializer(audits, many=True)
+        return JsonResponse(audits_serializer.data, safe=False)
+        # 'safe=False' for objects serialization
+ 
+    elif request.method == 'POST':
+        audits_data = JSONParser().parse(request)
+        audits_serializer = AuditsViewSerializer(data=audits_data)
+        if audits_serializer.is_valid():
+            audits_serializer.save()
+            return JsonResponse(audits_serializer.data, status=status.HTTP_201_CREATED) 
+        return JsonResponse(audits_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'DELETE':
+        count = Audits.objects.all().delete()
+        return JsonResponse({'message': '{} Audits were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)
+ 
+ 
+@api_view(['GET', 'PUT', 'DELETE'])
+def audits_detail(request, pk):
+    try: 
+        audits = Audits.objects.get(pk=pk) 
+    except Audits.DoesNotExist: 
+        return JsonResponse({'message': 'The audits does not exist'}, status=status.HTTP_404_NOT_FOUND) 
+ 
+    if request.method == 'GET': 
+        audits_serializer = AuditsViewSerializer(audits) 
+        return JsonResponse(audits_serializer.data) 
+ 
+    elif request.method == 'PUT': 
+        audits_data = JSONParser().parse(request) 
+        audits_serializer = AuditsViewSerializer(audits, data=audits_data)
+        if audits_serializer.is_valid(): 
+            audits_serializer.save() 
+            return JsonResponse(audits_serializer.data) 
+        return JsonResponse(audits_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+ 
+    elif request.method == 'DELETE': 
+        audits.delete() 
+        return JsonResponse({'message': 'Audits was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
+      
+@api_view(['GET'])
+
+def audits_list_active(request):
+    sku = Audits.objects.filter(status="Active")
+        
+    if request.method == 'GET': 
+        audits_serializer = AuditsViewSerializer(audits, many=True)
+        return JsonResponse(audits_serializer.data, safe=False)
+
+
+ ###################################               AUDITS              ############################### 
+
 
 ###################################              PRODUCE              ############################### 
 
@@ -479,7 +608,7 @@ def transactions_detail(request, pk):
         return JsonResponse({'message': 'The transaction does not exist'}, status=status.HTTP_404_NOT_FOUND) 
  
     if request.method == 'GET': 
-        transactions_serializer = TransactionsSerializer(transactions) 
+        transactions_serializer = TransactionsViewSerializer(transactions) 
         return JsonResponse(transactions_serializer.data) 
  
     elif request.method == 'PUT': 
@@ -504,6 +633,15 @@ def transactions_list_active(request):
         return JsonResponse(transactions_serializer.data, safe=False)
 
 
+@api_view(['GET'])
+def transactions_total(request,pk):
+    cumulative_weight = Transactions.objects.filter(farmer=pk).aggregate(Sum('weight'))['weight__sum']
+        
+    if request.method == 'GET': 
+        #transactions_serializer = TransactionsTotalSerializer(transactions, many=True)
+        #return JsonResponse(transactions_serializer.data, safe=False)
+        return JsonResponse({'cumulative_weight': cumulative_weight if cumulative_weight else 0,'farmer':pk})
+        
 
 
 ###################################               PAYMENT            ############################### 

@@ -15,7 +15,7 @@ SECRET_KEY = '7reb9d$g$mhgw0_)@y%+jh=$bnj9f*)v4zz1b4b-p+^^=zd8(d'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.104.229.106','127.0.0.1','192.168.11.19','localhost','13.68.157.42']
+ALLOWED_HOSTS = ['172.104.229.106','127.0.0.1','192.168.11.19','localhost','40.117.250.191']
 
 
 # Application definition
@@ -82,8 +82,12 @@ WSGI_APPLICATION = 'DjangoRestApi.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql', 
+        'NAME': 'aea_api',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost', 
+        'PORT': '3306',
     }
 }
 

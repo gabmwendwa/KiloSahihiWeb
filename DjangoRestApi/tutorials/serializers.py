@@ -10,6 +10,18 @@ class CooperativesSerializer(serializers.ModelSerializer):
         model = Cooperatives
         fields = ('id','name','reg_date','status')
 
+class UsersViewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id','username','email','password')
+        depth=1
+
+class UsersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id','username','email','password')
+        depth=1
+
 class ProduceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Produce
@@ -40,13 +52,13 @@ class DevicesViewSerializer(serializers.ModelSerializer):
 class ClerkViewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Clerk
-        fields = ('id','name','national_id','username','password','phone_number','factory','reg_date','status')
+        fields = ('id','name','user','national_id','username','password','phone_number','factory','reg_date','status')
         depth = 1
 
 class ClerkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Clerk
-        fields = ('id','name','national_id','username','password','phone_number','factory','reg_date','status')
+        fields = ('id','name','user','national_id','username','password','phone_number','factory','reg_date','status')
       
 class FarmersSerializer(serializers.ModelSerializer):
     class Meta:
@@ -62,12 +74,19 @@ class FarmersViewSerializer(serializers.ModelSerializer):
 class TransactionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transactions
-        fields = ('id','tx_code','weight','total_payout','farmer','device','produce','tx_date','status')
+        fields = ('id','tx_code','clerk','weight','total_payout','farmer','device','produce','tx_date','status')
 
+class TransactionsTotalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Transactions
+        fields = ('id','tx_code','total_payout','farmer','device','produce','tx_date','status')
+
+
+     
 class TransactionsViewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transactions
-        fields = ('id','tx_code','weight','total_payout','farmer','device','produce','tx_date','status')
+        fields = ('id','tx_code','clerk','weight','total_payout','farmer','device','produce','tx_date','status')
         depth = 1
 
 class PaymentSerializer(serializers.ModelSerializer):
@@ -81,6 +100,11 @@ class PaymentViewSerializer(serializers.ModelSerializer):
         fields = ('id','payment_code','tx_reference','method','payment_status','payment_date','status')
         depth = 1
 
+class AuditsViewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Audits
+        fields = ('id','name','user','action','date','status')
+        depth = 1
 ############################# KILOSAHIHI END #############################################
 
 
