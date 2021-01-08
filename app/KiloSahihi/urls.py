@@ -42,5 +42,7 @@ urlpatterns = [
     path('fro/', kilo_views.fro, name='fro'),
     path('devices/', kilo_views.devices, name='devices'),
     path('products/', kilo_views.products, name='products'),
+    path('audit/', kilo_views.audit, name='audit'),
+    path('report/', kilo_views.report, name='report'),
     path('404/', kilo_views.page_not_found, name='page_not_found'),
 ]

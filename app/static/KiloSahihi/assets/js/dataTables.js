@@ -3,14 +3,17 @@ function loadtable(tableid) {
     t.on('order.dt search.dt', function () { t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) { cell.innerHTML = i + 1; }); }).draw();
 }
 
-var getheaders = new Headers();
-getheaders.append("Authorization", "Token " + localStorage.session_token);
-getheaders.append("Content-Type", "application/json");
+// var getheaders = new Headers();
+// getheaders.append("Authorization", "Token " + localStorage.session_tokenxz);
+// getheaders.append("Content-Type", "application/json");
 var tablebody = document.getElementById('result-body');
+
+// console.log("Token " + localStorage.session_token);
+
 
 function getFarmerList() {
     try {
-        fetch("http://localhost:8003/api/farmers", { method: 'get', headers: getheaders, }).then((resp) => {
+        fetch(apilink+"farmers", { method: 'get', headers: getheaders, }).then((resp) => {
             resp.json().then((data) => {
                 var tabledata = "";
                 if (data.length) {
@@ -44,7 +47,7 @@ function getFarmerList() {
 
 function getFactoriesList() {
     try {
-        fetch("http://localhost:8003/api/factories", { method: 'get', headers: getheaders, }).then((resp) => {
+        fetch(apilink+"factories", { method: 'get', headers: getheaders, }).then((resp) => {
             resp.json().then((data) => {
                 var tabledata = "";
                 if (data.length) {
@@ -71,7 +74,7 @@ function getFactoriesList() {
 
 function getDeviceList() {
     try {
-        fetch("http://localhost:8003/api/devices", { method: 'get', headers: getheaders, }).then((resp) => {
+        fetch(apilink+"devices", { method: 'get', headers: getheaders, }).then((resp) => {
             resp.json().then((data) => {
                 var tabledata = "";
                 if (data.length) {
@@ -98,7 +101,7 @@ function getDeviceList() {
 
 function getProductList() {
     try {
-        fetch("http://localhost:8003/api/produce", { method: 'get', headers: getheaders, }).then((resp) => {
+        fetch(apilink+"produce", { method: 'get', headers: getheaders, }).then((resp) => {
             resp.json().then((data) => {
                 var tabledata = "";
                 if (data.length) {
@@ -124,7 +127,7 @@ function getProductList() {
 
 function getFROList() {
     try {
-        fetch("http://localhost:8003/api/clerks", { method: 'get', headers: getheaders, }).then((resp) => {
+        fetch(apilink+"clerks", { method: 'get', headers: getheaders, }).then((resp) => {
             resp.json().then((data) => {
                 var tabledata = "";
                 if (data.length) {
@@ -152,7 +155,7 @@ function getFROList() {
 
 function getTransactionList() {
     try {
-        fetch("http://localhost:8003/api/transactions", { method: 'get', headers: getheaders, }).then((resp) => {
+        fetch(apilink+"transactions", { method: 'get', headers: getheaders, }).then((resp) => {
             resp.json().then((data) => {
                 var tabledata = "";
                 if (data.length) {
@@ -167,6 +170,34 @@ function getTransactionList() {
                         tabledata += '<td>' + data[i]["device"]["name"] + '</td>';
                         tabledata += '<td>' + data[i]["produce"]["name"] + '</td>';
                         tabledata += '<td>' + data[i]["tx_date"] + '</td>';
+                        tabledata += '</tr>';
+                    }
+                    tablebody.innerHTML = tabledata;
+                }
+                App.dataTables();
+                loadtable("#table4");
+            });
+        });
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+function geAuditList() {
+    try {
+        fetch(apilink+"audits", { method: 'get', headers: getheaders, }).then((resp) => {
+            resp.json().then((data) => {
+                var tabledata = "";
+                if (data.length) {
+                    for (var i = 0; i < data.length; i++) {
+                        // tabledata += '<tr class="gradeA pointer" title="' + data[i]["name"] + '." onclick="window.open(\''+applink.trim()+'settings/farmer/' + data[i]["id"] + '/\', \'_self\')">';
+                        tabledata += '<tr class="gradeA pointer" title="' + data[i]["name"] + '.">';
+                        tabledata += '<td>#</td>';
+                        tabledata += '<td>' + data[i]["name"] + '</td>';
+                        tabledata += '<td>' + data[i]["action"] + '</td>';
+                        tabledata += '<td>' + data[i]["user"] + '</td>';
+                        tabledata += '<td>' + data[i]["date"] + '</td>';
                         tabledata += '</tr>';
                     }
                     tablebody.innerHTML = tabledata;

@@ -125,6 +125,14 @@ def products(request):
 	context = {}
 	return render(request, 'KiloSahihi/products.html', context)
 
+def audit(request):
+	context = {}
+	return render(request, 'KiloSahihi/audit.html', context)
+
+def report(request):
+	context = {}
+	return render(request, 'KiloSahihi/report.html', context)
+
 def page_not_found(request):
 	context = {}
 	return render(request, 'KiloSahihi/404.html', context)

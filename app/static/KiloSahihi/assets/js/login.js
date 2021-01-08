@@ -17,16 +17,41 @@ function login() {
     myheaders.append("Content-Type", "application/json");
 
     try {
-        fetch("http://localhost:8003/api/token/", { method: 'post', headers: myheaders, body: JSON.stringify(dataobj), }).then((resp) => {
+        fetch(apilink + "token/", { method: 'post', headers: myheaders, body: JSON.stringify(dataobj), }).then((resp) => {
             resp.json().then((data) => {
                 if (data.token) {
-                    localStorage.setItem("session_token", data.token);
-                    if (localStorage.last_location) {
-                        location.assign(localStorage.last_location);
-                        localStorage.removeItem("last_location");
+                    let thename = "Dashboard Login";
+                    let theaction = "User of Identification Number " + data.pk.toString() + " has logged in.";
+                    let theuser = data.user;
+                    let thestatus = "Active";
+
+                    let sess_token = data.token;
+                    let sess_data = data;
+
+                    var auditobj = { "name": thename, "action": theaction, "user": theuser, "status": thestatus };
+                    myheaders.append("Authorization", "Token " + sess_token);
+                    try {
+                        fetch(apilink + "audits", { method: 'post', headers: myheaders, body: JSON.stringify(auditobj), }).then((resp) => {
+                            resp.json().then((data) => {
+                                if (data.name) {
+                                    localStorage.setItem("session_token", sess_token);
+                                    localStorage.setItem("session_user", JSON.stringify(sess_data));
+                                    if (localStorage.last_location) {
+                                        location.assign(localStorage.last_location);
+                                        localStorage.removeItem("last_location");
+                                    }
+                                    else {
+                                        location.assign(applink + "home/");
+                                    }
+                                }
+                                else {
+                                    alert("Something went wrong. Please refresh page and try again.");
+                                }
+                            });
+                        });
                     }
-                    else {
-                        location.assign("http://localhost:8002/home/");
+                    catch (err) {
+                        console.log(err);
                     }
                 }
                 else {

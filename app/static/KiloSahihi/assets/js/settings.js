@@ -146,22 +146,33 @@ function submitSettingsForm(elem) {
     var form_name = elem.getAttribute("data-form-name");
     var inputobj = $('form').serializeObject();
     var dataobj = JSON.stringify(inputobj);
+    var what, whatTitle;
 
     switch (form_name) {
         case "settings_farmer":
             durl += "farmers/" + getid;
+            what = "farmer";
+            whatTitle = "Farmer";
             break;
         case "settings_factory":
             durl += "factories/" + getid;
+            what = "factory";
+            whatTitle = "Factory";
             break;
         case "settings_device":
             durl += "devices/" + getid;
+            what = "device";
+            whatTitle = "Device";
             break;
         case "settings_fro":
             durl += "clerks/" + getid;
+            what = "clerk";
+            whatTitle = "Clerk";
             break;
         case "settings_produce":
             durl += "produce/" + getid;
+            what = "produce";
+            whatTitle = "Produce";
             break;
     }
     try {
@@ -171,8 +182,31 @@ function submitSettingsForm(elem) {
                     case "settings_fro":
                     case "settings_farmer":
                         if (data.username == inputobj.username) {
-                            alert("Editted successfully.");
-                            location.reload();
+
+                            let thename = "Dashboard " + whatTitle + " Edited";
+                            let theaction = "User of Identification Number " + userinfo.pk.toString() + " has edited a " + what + " of Identification Number " + data.id + " and Username " + data.username + ".";
+                            let theuser = userinfo.user;
+                            let thestatus = "Active";
+
+                            var auditobj = { "name": thename, "action": theaction, "user": theuser, "status": thestatus };
+                            try {
+                                fetch(apilink + "audits", { method: 'post', headers: getheaders, body: JSON.stringify(auditobj), }).then((resp) => {
+                                    resp.json().then((data) => {
+                                        if (data.name) {
+                                            alert("Editted successfully.");
+                                            location.reload();
+                                        }
+                                        else {
+                                            alert("Something went wrong. Please refresh page and try again.");
+                                        }
+                                    });
+                                });
+                            }
+                            catch (err) {
+                                console.log(err);
+                            }
+
+
                         }
                         else {
                             alert("Something went wrong. Try again.");
@@ -180,8 +214,28 @@ function submitSettingsForm(elem) {
                         break;
                     case "settings_factory":
                         if (data.name == inputobj.name) {
-                            alert("Editted successfully.");
-                            location.reload();
+                            let thename = "Dashboard " + whatTitle + " Edited";
+                            let theaction = "User of Identification Number " + userinfo.pk.toString() + " has edited a " + what + " of Identification Number " + data.id + " and Name " + data.name + ".";
+                            let theuser = userinfo.user;
+                            let thestatus = "Active";
+
+                            var auditobj = { "name": thename, "action": theaction, "user": theuser, "status": thestatus };
+                            try {
+                                fetch(apilink + "audits", { method: 'post', headers: getheaders, body: JSON.stringify(auditobj), }).then((resp) => {
+                                    resp.json().then((data) => {
+                                        if (data.name) {
+                                            alert("Editted successfully.");
+                                            location.reload();
+                                        }
+                                        else {
+                                            alert("Something went wrong. Please refresh page and try again.");
+                                        }
+                                    });
+                                });
+                            }
+                            catch (err) {
+                                console.log(err);
+                            }
                         }
                         else {
                             alert("Something went wrong. Try again.");
@@ -189,8 +243,28 @@ function submitSettingsForm(elem) {
                         break;
                     case "settings_device":
                         if (data.imei == inputobj.imei) {
-                            alert("Editted successfully.");
-                            location.reload();
+                            let thename = "Dashboard " + whatTitle + " Edited";
+                            let theaction = "User of Identification Number " + userinfo.pk.toString() + " has edited a " + what + " of Identification Number " + data.id + " and Name " + data.name + ".";
+                            let theuser = userinfo.user;
+                            let thestatus = "Active";
+
+                            var auditobj = { "name": thename, "action": theaction, "user": theuser, "status": thestatus };
+                            try {
+                                fetch(apilink + "audits", { method: 'post', headers: getheaders, body: JSON.stringify(auditobj), }).then((resp) => {
+                                    resp.json().then((data) => {
+                                        if (data.name) {
+                                            alert("Editted successfully.");
+                                            location.reload();
+                                        }
+                                        else {
+                                            alert("Something went wrong. Please refresh page and try again.");
+                                        }
+                                    });
+                                });
+                            }
+                            catch (err) {
+                                console.log(err);
+                            }
                         }
                         else {
                             alert("Something went wrong. Try again.");
@@ -198,8 +272,28 @@ function submitSettingsForm(elem) {
                         break;
                     case "settings_produce":
                         if (data.name == inputobj.name) {
-                            alert("Editted successfully.");
-                            location.reload();
+                            let thename = "Dashboard " + whatTitle + " Edited";
+                            let theaction = "User of Identification Number " + userinfo.pk.toString() + " has edited a " + what + " of Identification Number " + data.id + " and Name " + data.name + ".";
+                            let theuser = userinfo.user;
+                            let thestatus = "Active";
+
+                            var auditobj = { "name": thename, "action": theaction, "user": theuser, "status": thestatus };
+                            try {
+                                fetch(apilink + "audits", { method: 'post', headers: getheaders, body: JSON.stringify(auditobj), }).then((resp) => {
+                                    resp.json().then((data) => {
+                                        if (data.name) {
+                                            alert("Editted successfully.");
+                                            location.reload();
+                                        }
+                                        else {
+                                            alert("Something went wrong. Please refresh page and try again.");
+                                        }
+                                    });
+                                });
+                            }
+                            catch (err) {
+                                console.log(err);
+                            }
                         }
                         else {
                             alert("Something went wrong. Try again.");
@@ -221,44 +315,76 @@ function deleteFormRecord(elem) {
     var form_name = elem.getAttribute("data-form-name");
     var inputobj = $('form').serializeObject();
     var dataobj = JSON.stringify(inputobj);
+    var what, whatTitle;
 
     switch (form_name) {
         case "settings_farmer":
             durl += "farmers/" + getid;
+            what = "farmer";
+            whatTitle = "Farmer";
             break;
         case "settings_factory":
             durl += "factories/" + getid;
+            what = "factory";
+            whatTitle = "Factory";
             break;
         case "settings_device":
             durl += "devices/" + getid;
+            what = "device";
+            whatTitle = "Device";
             break;
         case "settings_fro":
             durl += "clerks/" + getid;
+            what = "clerk";
+            whatTitle = "Clerk";
             break;
         case "settings_produce":
             durl += "produce/" + getid;
+            what = "produce";
+            whatTitle = "Produce";
             break;
     }
     try {
         fetch(durl, { method: 'delete', headers: getheaders, body: dataobj, }).then((resp) => {
             if (resp.ok) {
-                alert("Deleted successfully.");
-                switch (form_name) {
-                    case "settings_fro":
-                        location.assign(applink.trim() + 'fro/');
-                        break;
-                    case "settings_farmer":
-                        location.assign(applink.trim() + 'farmers/');
-                        break;
-                    case "settings_factory":
-                        location.assign(applink.trim() + 'factories/');
-                        break;
-                    case "settings_device":
-                        location.assign(applink.trim() + 'devices/');
-                        break;
-                    case "settings_produce":
-                        location.assign(applink.trim() + 'products/');
-                        break;
+                let thename = "Dashboard " + whatTitle + " Deleted";
+                let theaction = "User of Identification Number " + userinfo.pk.toString() + " has deleted a " + what + " of Identification Number " + getid + ".";
+                let theuser = userinfo.user;
+                let thestatus = "Active";
+
+                var auditobj = { "name": thename, "action": theaction, "user": theuser, "status": thestatus };
+                try {
+                    fetch(apilink + "audits", { method: 'post', headers: getheaders, body: JSON.stringify(auditobj), }).then((resp) => {
+                        resp.json().then((data) => {
+                            if (data.name) {
+
+                                alert("Deleted successfully.");
+                                switch (form_name) {
+                                    case "settings_fro":
+                                        location.assign(applink.trim() + 'fro/');
+                                        break;
+                                    case "settings_farmer":
+                                        location.assign(applink.trim() + 'farmers/');
+                                        break;
+                                    case "settings_factory":
+                                        location.assign(applink.trim() + 'factories/');
+                                        break;
+                                    case "settings_device":
+                                        location.assign(applink.trim() + 'devices/');
+                                        break;
+                                    case "settings_produce":
+                                        location.assign(applink.trim() + 'products/');
+                                        break;
+                                }
+                            }
+                            else {
+                                alert("Something went wrong. Please refresh page and try again.");
+                            }
+                        });
+                    });
+                }
+                catch (err) {
+                    console.log(err);
                 }
             }
             else {
