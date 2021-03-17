@@ -1,125 +1,152 @@
 {% extends "KiloSahihi/main_dash_one.html" %}
+
 {% block title %}Home{% endblock %}
 
 {% load static %}
 
 {%block main_content %}
-<div class="main-content">
-    <div class="row">
-        <div class="col-md-7">
-            <div class="widget widget-fullwidth line-chart">
-                <div class="widget-head">
-                    <div class="tools"><span class="icon s7-upload"></span><span class="icon s7-edit"></span><span
-                            class="icon s7-close"></span></div><span class="title">Monthly Statistics (Produce
-                        Collection)</span>
-                </div>
-                <div class="chart-container">
-                    <div class="counter">
-                        <!--<div class="value">19.5%</div>
-                  <div class="desc">New Downloads</div>-->
-                    </div>
-                    <div id="line-chart-live" style="height: 285px;"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-5">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="widget widget-tile">
-                        <div class="data-info">
-                            <div data-toggle="counter" data-end="18.6" data-decimals="1" class="value">0%
-                            </div>
-                            <div class="desc">TOTAL FARMERS</div>
-                        </div>
-                        <div class="icon"><span class="s7-id"></span></div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="widget widget-tile">
-                        <div class="data-info">
-                            <div data-toggle="counter" data-end="33" class="value">0%</div>
-                            <div class="desc">ACTIVE DEVICES</div>
-                        </div>
-                        <div class="icon"><span class="s7-phone"></span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="widget widget-tile">
-                        <div class="data-info">
-                            <div data-toggle="counter" data-end="156" class="value">0</div>
-                            <div class="desc">ZONES</div>
-                        </div>
-                        <div class="icon"><span class="s7-map-marker"></span></div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="widget widget-tile">
-                        <div class="data-info">
-                            <div data-toggle="counter" data-decimals="1" data-end="7.5" class="value">0
-                            </div>
-                            <div class="desc">FARM OFFICERS</div>
-                        </div>
-                        <div class="icon"><span class="s7-users"></span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="widget widget-tile widget-tile-wide">
-                        <div class="tile-info">
-                            <div class="icon"><span class="s7-leaf"></span></div>
-                            <div class="data-info">
-                                <div class="title">Total Weighing(Kgs)</div>
-                                <div class="desc">ALL REGIONS</div>
-                            </div>
-                        </div>
-                        <div class="tile-value"><span data-toggle="counter" data-decimals="2" data-end="28458">0</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="widget widget-calendar">
-                <div class="cal-container">
-                    <div class="cal-notes"><span class="day">Thursday</span><span class="date">September
-                            24</span></span>
-                        <br><br><br><br><br>
-                    </div>
-                    <div class="cal-calendar">
-                        <div class="ui-datepicker"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="page-content">
+	<div class="container-fluid">
 
-        <div class="col-md-6">
-            <div class="widget widget-download-list">
-                <div class="widget-head"><span class="icon s7-cloud"></span><span class="title">Collection
-                        Days</span></div>
-                <ul class="widget-list">
-                    <li><a href="dashboard2.php#">Eburru (date)<span class="icon s7-download"></span></a>
-                    </li>
-                    <li><a href="dashboard2.php#">Soiataran (date)<span class="icon s7-download"></span></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+		<!-- start page title -->
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box d-flex align-items-center justify-content-between">
+					<h4 class="mb-0">Home</h4>
+
+					<div class="page-title-right">
+						<ol class="breadcrumb m-0">
+							<li class="breadcrumb-item"><a href="javascript: void(0);">Kilo Sahihi</a></li>
+							<li class="breadcrumb-item active">Home</li>
+						</ol>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!-- end page title -->
+
+		<div class="row">
+			<div class="col-md-6 col-xl-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="float-end mt-2">
+							<div id="farmers-chart"></div>
+						</div>
+						<div>
+							<h4 class="mb-1 mt-1"><span data-plugin="counterup"><span id="farmers-count">34,152</span></span></h4>
+							<p class="text-muted mb-0">Total Farmer</p>
+						</div>
+					</div>
+				</div>
+			</div> <!-- end col-->
+
+			<div class="col-md-6 col-xl-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="float-end mt-2">
+							<div id="factories-chart"> </div>
+						</div>
+						<div>
+							<h4 class="mb-1 mt-1"><span data-plugin="counterup"><span id="factories-count">5,643</span></span></h4>
+							<p class="text-muted mb-0">Total Factories</p>
+						</div>
+					</div>
+				</div>
+			</div> <!-- end col-->
+
+			<div class="col-md-6 col-xl-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="float-end mt-2">
+							<div id="fros-chart"> </div>
+						</div>
+						<div>
+							<h4 class="mb-1 mt-1"><span data-plugin="counterup"><span id="fros-count">1,758</span></span></h4>
+							<p class="text-muted mb-0">Total Farmer Officers</p>
+						</div>
+					</div>
+				</div>
+			</div> <!-- end col-->
+
+			<div class="col-md-6 col-xl-3">
+
+				<div class="card">
+					<div class="card-body">
+						<div class="float-end mt-2">
+							<div id="devices-chart"></div>
+						</div>
+						<div>
+							<h4 class="mb-1 mt-1"><span data-plugin="counterup"><span id="factories-count">1,234</span></span></h4>
+							<p class="text-muted mb-0">Total Active Devices</p>
+						</div>
+					</div>
+				</div>
+			</div> <!-- end col-->
+		</div> <!-- end row-->
+
+		<div class="row">
+			<div class="col-xl-8">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title mb-4">Transactions Analytics</h4>
+
+						<div class="mt-3">
+							<div id="transactions-analytics-chart" class="apex-charts" dir="ltr"></div>
+						</div>
+					</div> <!-- end card-body-->
+				</div> <!-- end card-->
+			</div> <!-- end col-->
+
+			<div class="col-xl-4">
+				<div class="card bg-primary hakim">
+					<div class="card-body">
+						<div class="row align-items-center">
+							<div class="col-sm-8">
+								<div class="mt-4">
+
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="mt-4 mt-sm-0">
+
+								</div>
+							</div>
+						</div>
+					</div> <!-- end card-body-->
+				</div> <!-- end card-->
+
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title mb-4">Total Weighed (Kgs)</h4>
+
+
+						<div class="row align-items-center g-0 mt-3">
+							<div class="col-sm-5">
+								<p class="text-truncate mt-1 mb-0"><i
+										class="uil uil-coins text-primary me-2"></i> All Factories</p>
+							</div>
+
+							<div class="col-sm-7">
+								<h4 class="mb-1 mt-1"><span data-plugin="counterup"><span id="totalweighied-count">21,758.00</span></span></h4>
+							</div>
+						</div> <!-- end row-->
+					</div> <!-- end card-body-->
+				</div> <!-- end card-->
+			</div> <!-- end Col -->
+		</div> <!-- end row-->
+
+
+	</div> <!-- container-fluid -->
 </div>
-{% endblock %}
-{% block dashboard_script %}
-<script type="text/javascript">
-    $(document).ready(function () {
-        //initialize the javascript
-        App.init();
-        App.dashboard2();
-    });
-</script>
+<!-- End Page-content -->
 
+{% endblock %}
+
+{% block dashboard_script %}
+<!-- apexcharts -->
+<script src="{% static 'KiloSahihi/assets/libs/apexcharts/apexcharts.min.js' %}"></script>
+
+<script src="{% static 'KiloSahihi/assets/js/pages/dashboard.init.js' %}"></script>
 {% endblock %}

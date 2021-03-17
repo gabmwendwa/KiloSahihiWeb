@@ -6,40 +6,52 @@
 <script src="{% static 'KiloSahihi/assets/js/yes_token.js' %}" type="text/javascript"></script>
 {% endblock %}
 {% block main_content %}
-<div class="main-content">
-	<div class="login-container">
-		<div class="panel panel-default">
-			<div class="panel-heading"><img src="{% static 'KiloSahihi/assets/img/login.png' %}" alt="logo"
-					width="250px" class="logo-img"></div>
-			<div class="panel-body">
-				<form action="" method="post" class="form-horizontal" id="login-form">
-					{% csrf_token %}
-					<div class="login-form">
-						<div class="form-group">
-							<div class="input-group"><span class="input-group-addon"><i class="icon s7-user"></i></span>
-								<input id="username" type="text" placeholder="Username" onkeyup="uname = this.value;"
-									onkeydown="uname = this.value;" id="username" name="username" value=""
-									autocomplete="off" class="form-control" required>
+<div class="row align-items-center justify-content-center">
+	<div class="col-md-8 col-lg-6 col-xl-5">
+		<div class="card">
+
+			<div class="card-body p-4">
+				<div class="text-center mt-2">
+					<h5 class="text-primary">Welcome Back!</h5>
+					<p class="text-muted">Sign in to continue to Kilo Sahihi.</p>
+				</div>
+				<div class="p-2 mt-4">
+					<form action="" method="post" class="form-horizontal" id="login-form">
+						{% csrf_token %}
+						<div class="mb-3">
+							<label class="form-label" for="username">Username</label>
+							<input type="text" class="form-control" id="username" type="text" onkeyup="uname = this.value;"
+							onkeydown="uname = this.value;" name="username" value=""
+							autocomplete="off" class="form-control" placeholder="Enter username" required>
+						</div>
+
+						<div class="mb-3">
+							<label class="form-label" for="userpassword">Password</label>
+							<input type="password" class="form-control" type="password" id="password" name="password"
+							onkeyup="pword = this.value;" onkeydown="pword = this.value;" placeholder="Enter password" required>
+							<div class="float-end">
+								<a href="{% url 'recover' %}" class="text-muted">Forgot password?</a>
 							</div>
 						</div>
-						<div class="form-group">
-							<div class="input-group"><span class="input-group-addon"><i class="icon s7-lock"></i></span>
-								<input id="password" type="password" id="password" name="password"
-									onkeyup="pword = this.value;" onkeydown="pword = this.value;" placeholder="Password"
-									class="form-control" required>
-							</div>
+						<br>
+
+						<div class="mt-3 text-end">
+							<button class="btn btn-primary w-sm waves-effect waves-light" type="button" id="login-btn">Sign In</button>
 						</div>
-						<div class="form-group login-submit">
-							<button data-dismiss="modal" type="submit" class="btn btn-primary btn-lg"
-								id="login-btn">LOGIN</button>
-						</div>
-						<div class="form-group footer row">
-							<div class="col-xs-12 text-center"><a href="{% url 'recover' %}">Forgot Password?</a></div>
-						</div>
-					</div>
-				</form>
+
+					</form>
+				</div>
+
 			</div>
 		</div>
+
+		<div class="mt-5 text-center">
+			<p><script>document.write(new Date().getFullYear())</script> © Kilo Sahihi. Crafted by <a
+					href="https://aealimited.com/" target="_blank" class="text-reset">AEA
+					LIMITED
+			</p>
+		</div>
+
 	</div>
 </div>
 {% endblock %}

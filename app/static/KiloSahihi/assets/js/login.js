@@ -1,8 +1,8 @@
-document.getElementById("login-btn").addEventListener("click", function (event) {
+document.getElementById("login-btn").addEventListener("click", function(event) {
     event.preventDefault();
     login();
 });
-document.getElementById("login-form").addEventListener("submit", function (event) {
+document.getElementById("login-form").addEventListener("submit", function(event) {
     event.preventDefault()
 });
 
@@ -39,28 +39,23 @@ function login() {
                                     if (localStorage.last_location) {
                                         location.assign(localStorage.last_location);
                                         localStorage.removeItem("last_location");
-                                    }
-                                    else {
+                                    } else {
                                         location.assign(applink + "home/");
                                     }
-                                }
-                                else {
+                                } else {
                                     alert("Something went wrong. Please refresh page and try again.");
                                 }
                             });
                         });
-                    }
-                    catch (err) {
+                    } catch (err) {
                         console.log(err);
                     }
-                }
-                else {
+                } else {
                     alert("Incorrect username and password.");
                 }
             });
         });
-    }
-    catch (err) {
+    } catch (err) {
         console.log(err);
     }
     return false;

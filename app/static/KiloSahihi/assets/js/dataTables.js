@@ -1,41 +1,45 @@
 function loadtable(tableid) {
-    var t = $(tableid).DataTable({ "columnDefs": [{ "searchable": false, "orderable": false, "targets": 0 }], });
-    t.on('order.dt search.dt', function () { t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) { cell.innerHTML = i + 1; }); }).draw();
+    $("#" + tableid).DataTable({
+        lengthChange: !1,
+        buttons: [
+            "copy",
+            "excel",
+            "pdf",
+            "print"
+        ]
+    }).buttons().container().appendTo("#" + tableid + "_wrapper .col-md-6:eq(0)")
 }
 
-// var getheaders = new Headers();
-// getheaders.append("Authorization", "Token " + localStorage.session_tokenxz);
-// getheaders.append("Content-Type", "application/json");
 var tablebody = document.getElementById('result-body');
-
-// console.log("Token " + localStorage.session_token);
-
 
 function getFarmerList() {
     try {
-        fetch(apilink+"farmers", { method: 'get', headers: getheaders, }).then((resp) => {
+        fetch(apilink + "farmers", { method: 'get', headers: getheaders, }).then((resp) => {
             resp.json().then((data) => {
                 var tabledata = "";
+
                 if (data.length) {
+                    var j = 0;
                     for (var i = 0; i < data.length; i++) {
-                        tabledata += '<tr class="gradeA pointer" title="' + data[i]["name"] + '." onclick="window.open(\''+applink.trim()+'settings/farmer/' + data[i]["id"] + '/\', \'_self\')">';
-                        tabledata += '<td>#</td>';
+                        j += 1;
+                        tabledata += '<tr class="custom-pointer" title="Edit." onclick="window.open(\'' + applink.trim() + 'settings/farmer/' + data[i]["id"] + '/\', \'_self\')">';
+                        tabledata += '<td>' + j.toString() + '</td>';
                         tabledata += '<td>' + data[i]["name"] + '</td>';
                         tabledata += '<td>' + data[i]["username"] + '</td>';
                         tabledata += '<td>' + data[i]["national_id"] + '</td>';
                         tabledata += '<td>' + data[i]["phone_number"] + '</td>';
                         tabledata += '<td>' + data[i]["bank_branch"] + '</td>';
-                        tabledata += '<td>' + data[i]["bank_account_name"] + '</td>';
-                        tabledata += '<td>' + data[i]["bank_account"] + '</td>';
+                        tabledata += '<td>' + data[i]["bank_account_name"] + '<br>[' + data[i]["bank_account"] + ']</td>';
+                        // tabledata += '<td>' + data[i]["bank_account_name"] + '</td>';
+                        // tabledata += '<td>' + data[i]["bank_account"] + '</td>';
                         tabledata += '<td>' + data[i]["acres"] + '</td>';
                         tabledata += '<td>' + data[i]["lat"] + ", " + data[i]["lon"] + '</td>';
-                        tabledata += '<td>' + data[i]["factory"]["name"] + '</td>';
+                        tabledata += (data[i]["factory"] == null) ? '<td>empty</td>' : '<td>' + data[i]["factory"]["name"] + '</td>';
                         tabledata += '</tr>';
                     }
                     tablebody.innerHTML = tabledata;
+                    loadtable("datatable-buttons");
                 }
-                App.dataTables();
-                loadtable("#table4");
             });
         });
     }
@@ -47,22 +51,23 @@ function getFarmerList() {
 
 function getFactoriesList() {
     try {
-        fetch(apilink+"factories", { method: 'get', headers: getheaders, }).then((resp) => {
+        fetch(apilink + "factories", { method: 'get', headers: getheaders, }).then((resp) => {
             resp.json().then((data) => {
                 var tabledata = "";
                 if (data.length) {
+                    var j = 0;
                     for (var i = 0; i < data.length; i++) {
-                        tabledata += '<tr class="gradeA pointer" title="' + data[i]["name"] + '." onclick="window.open(\''+applink.trim()+'settings/factory/' + data[i]["id"] + '/\', \'_self\')">';
-                        tabledata += '<td>#</td>';
+                        j += 1;
+                        tabledata += '<tr class="custom-pointer" title="Edit." onclick="window.open(\'' + applink.trim() + 'settings/factory/' + data[i]["id"] + '/\', \'_self\')">';
+                        tabledata += '<td>' + j.toString() + '</td>';
                         tabledata += '<td>' + data[i]["name"] + '</td>';
                         tabledata += '<td>' + data[i]["product"]["name"] + '</td>';
-                        tabledata += '<td>' + data[i]["cooperative"]["name"] + '</td>';
+                        tabledata += (data[i]["cooperative"] == null) ? '<td>empty</td>' : '<td>' + data[i]["cooperative"]["name"] + '</td>';
                         tabledata += '</tr>';
                     }
                     tablebody.innerHTML = tabledata;
                 }
-                App.dataTables();
-                loadtable("#table4");
+                loadtable("datatable-buttons");
             });
         });
     }
@@ -74,22 +79,25 @@ function getFactoriesList() {
 
 function getDeviceList() {
     try {
-        fetch(apilink+"devices", { method: 'get', headers: getheaders, }).then((resp) => {
+        fetch(apilink + "devices", { method: 'get', headers: getheaders, }).then((resp) => {
             resp.json().then((data) => {
                 var tabledata = "";
                 if (data.length) {
+                    // console.log(data);
+                    // console.log(data[0]);
+                    var j = 0;
                     for (var i = 0; i < data.length; i++) {
-                        tabledata += '<tr class="gradeA pointer" title="' + data[i]["name"] + '." onclick="window.open(\''+applink.trim()+'settings/device/' + data[i]["id"] + '/\', \'_self\')">';
-                        tabledata += '<td>#</td>';
+                        j += 1;
+                        tabledata += '<tr class="custom-pointer" title="Edit." onclick="window.open(\'' + applink.trim() + 'settings/device/' + data[i]["id"] + '/\', \'_self\')">';
+                        tabledata += '<td>' + j.toString() + '</td>';
                         tabledata += '<td>' + data[i]["name"] + '</td>';
                         tabledata += '<td>' + data[i]["imei"] + '</td>';
-                        tabledata += '<td>' + data[i]["factory"]["name"] + '</td>';
+                        tabledata += (data[i]["factory"] == null) ? '<td>empty</td>' : '<td>' + data[i]["factory"]["name"] + '</td>';
                         tabledata += '</tr>';
                     }
                     tablebody.innerHTML = tabledata;
                 }
-                App.dataTables();
-                loadtable("#table4");
+                loadtable("datatable-buttons");
             });
         });
     }
@@ -101,13 +109,15 @@ function getDeviceList() {
 
 function getProductList() {
     try {
-        fetch(apilink+"produce", { method: 'get', headers: getheaders, }).then((resp) => {
+        fetch(apilink + "produce", { method: 'get', headers: getheaders, }).then((resp) => {
             resp.json().then((data) => {
                 var tabledata = "";
                 if (data.length) {
+                    var j = 0;
                     for (var i = 0; i < data.length; i++) {
-                        tabledata += '<tr class="gradeA pointer" title="' + data[i]["name"] + '." onclick="window.open(\''+applink.trim()+'settings/product/' + data[i]["id"] + '/\', \'_self\')">';
-                        tabledata += '<td>#</td>';
+                        j += 1;
+                        tabledata += '<tr class="custom-pointer" title="Edit." onclick="window.open(\'' + applink.trim() + 'settings/product/' + data[i]["id"] + '/\', \'_self\')">';
+                        tabledata += '<td>' + j.toString() + '</td>';
                         tabledata += '<td>' + data[i]["name"] + '</td>';
                         tabledata += '<td>' + data[i]["status"] + '</td>';
                         tabledata += '<td>' + data[i]["reg_date"] + '</td>';
@@ -115,8 +125,7 @@ function getProductList() {
                     }
                     tablebody.innerHTML = tabledata;
                 }
-                App.dataTables();
-                loadtable("#table4");
+                loadtable("datatable-buttons");
             });
         });
     }
@@ -127,24 +136,25 @@ function getProductList() {
 
 function getFROList() {
     try {
-        fetch(apilink+"clerks", { method: 'get', headers: getheaders, }).then((resp) => {
+        fetch(apilink + "clerks", { method: 'get', headers: getheaders, }).then((resp) => {
             resp.json().then((data) => {
                 var tabledata = "";
                 if (data.length) {
+                    var j = 0;
                     for (var i = 0; i < data.length; i++) {
-                        tabledata += '<tr class="gradeA pointer" title="' + data[i]["name"] + '." onclick="window.open(\''+applink.trim()+'settings/fro/' + data[i]["id"] + '/\', \'_self\')">';
-                        tabledata += '<td>#</td>';
+                        j += 1;
+                        tabledata += '<tr class="custom-pointer" title="Edit." onclick="window.open(\'' + applink.trim() + 'settings/fro/' + data[i]["id"] + '/\', \'_self\')">';
+                        tabledata += '<td>' + j.toString() + '</td>';
                         tabledata += '<td>' + data[i]["name"] + '</td>';
                         tabledata += '<td>' + data[i]["username"] + '</td>';
                         tabledata += '<td>' + data[i]["national_id"] + '</td>';
                         tabledata += '<td>' + data[i]["phone_number"] + '</td>';
-                        tabledata += '<td>' + data[i]["factory"]["name"] + '</td>';
+                        tabledata += (data[i]["factory"] == null) ? '<td>empty</td>' : '<td>' + data[i]["factory"]["name"] + '</td>';
                         tabledata += '</tr>';
                     }
                     tablebody.innerHTML = tabledata;
                 }
-                App.dataTables();
-                loadtable("#table4");
+                loadtable("datatable-buttons");
             });
         });
     }
@@ -155,14 +165,16 @@ function getFROList() {
 
 function getTransactionList() {
     try {
-        fetch(apilink+"transactions", { method: 'get', headers: getheaders, }).then((resp) => {
+        fetch(apilink + "transactions", { method: 'get', headers: getheaders, }).then((resp) => {
             resp.json().then((data) => {
                 var tabledata = "";
                 if (data.length) {
-                    for (var i = 0; i < data.length; i++) {
-                        // tabledata += '<tr class="gradeA pointer" title="' + data[i]["name"] + '." onclick="window.open(\''+applink.trim()+'view/transaction/' + data[i]["id"] + '/\', \'_self\')">';
-                        tabledata += '<tr class="gradeA pointer" title="' + data[i]["name"] + '.">';
-                        tabledata += '<td>#</td>';
+                    var j = 0;
+                    for (var i = data.length - 1; i >= 0; i--) {
+                        j += 1;
+                        // tabledata += '<tr class="custom-pointer" title="Edit." onclick="window.open(\''+applink.trim()+'view/transaction/' + data[i]["id"] + '/\', \'_self\')">';
+                        tabledata += '<tr>';
+                        tabledata += '<td>' + j.toString() + '</td>';
                         tabledata += '<td>' + data[i]["tx_code"] + '</td>';
                         tabledata += '<td>' + data[i]["weight"] + '</td>';
                         tabledata += '<td>' + data[i]["total_payout"] + '</td>';
@@ -174,8 +186,7 @@ function getTransactionList() {
                     }
                     tablebody.innerHTML = tabledata;
                 }
-                App.dataTables();
-                loadtable("#table4");
+                loadtable("datatable-buttons");
             });
         });
     }
@@ -184,16 +195,20 @@ function getTransactionList() {
     }
 }
 
-function geAuditList() {
+function getAuditList() {
     try {
-        fetch(apilink+"audits", { method: 'get', headers: getheaders, }).then((resp) => {
+        fetch(apilink + "audits", { method: 'get', headers: getheaders, }).then((resp) => {
             resp.json().then((data) => {
                 var tabledata = "";
+                var j = 0;
                 if (data.length) {
-                    for (var i = 0; i < data.length; i++) {
-                        // tabledata += '<tr class="gradeA pointer" title="' + data[i]["name"] + '." onclick="window.open(\''+applink.trim()+'settings/farmer/' + data[i]["id"] + '/\', \'_self\')">';
-                        tabledata += '<tr class="gradeA pointer" title="' + data[i]["name"] + '.">';
-                        tabledata += '<td>#</td>';
+                    for (var i = data.length - 1; i >= 0; i--) {
+                        console.log(data);
+                        console.log(data[0]);
+                        j += 1;
+                        // tabledata += '<tr class="custom-pointer" title="Edit." onclick="window.open(\''+applink.trim()+'settings/farmer/' + data[i]["id"] + '/\', \'_self\')">';
+                        tabledata += '<tr>';
+                        tabledata += '<td>' + j.toString() + '</td>';
                         tabledata += '<td>' + data[i]["name"] + '</td>';
                         tabledata += '<td>' + data[i]["action"] + '</td>';
                         tabledata += '<td>' + data[i]["user"] + '</td>';
@@ -202,8 +217,7 @@ function geAuditList() {
                     }
                     tablebody.innerHTML = tabledata;
                 }
-                App.dataTables();
-                loadtable("#table4");
+                loadtable("datatable-buttons");
             });
         });
     }
