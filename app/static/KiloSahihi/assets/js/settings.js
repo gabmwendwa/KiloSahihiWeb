@@ -404,5 +404,5 @@ function redirectNotFound() {
         if (!checkdata) {
             location.assign(applink.trim() + '404/');
         }
-    }, 3000);
+    }, 1000);
 }

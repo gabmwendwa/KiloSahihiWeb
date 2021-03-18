@@ -7,89 +7,95 @@
 {% endblock%}
 
 {%block main_content %}
-<div class="page-head">
-    <h2>Settings Factory</h2>
-    <ol class="breadcrumb">
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'factories' %}">Factory Details</a></li>
-        <li><a href="#">Settings Factory</a></li>
-    </ol>
-</div>
+<div class="page-content">
+    <div class="container-fluid">
 
-<div class="main-content">
-    <div class="row">
-        <div class="col-md-2 col-sm-2"></div>
-        <div class="col-md-7 col-sm-7">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3>Settings Factory</h3>
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0">Edit Factory</h4>
+
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Kilo Sahihi</a></li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Factories</a></li>
+                            <li class="breadcrumb-item active">Edit</li>
+                        </ol>
+                    </div>
+
                 </div>
-                <div class="panel-body">
-                    <form id="settings_form" action="" method="post" class="form-horizontal group-border-dashed">
-                        {% csrf_token %}
-                        <div class="row">
-                            <div class="col-md-5 col-sm-5">
-                                <div class="form-group">
-                                    <label>Factory Name*</label>
-                                    <input type="text" name="name" id="name" parsley-trigger="change" required=""
-                                        placeholder="Enter Factory Name" title="Enter Factory Name." autocomplete="off"
-                                        class="form-control" data-parsley-id="4">
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-sm-2"></div>
-                            <div class="col-md-5 col-sm-5">
-                                <div class="form-group">
-                                    <label>Product*</label>
-                                    <select name="product" id="product" class="form-control" data-parsley-id="4"
-                                        required="">
-                                        <option value="">-Choose Product-</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-5 col-sm-5">
-                                <div class="form-group">
-                                    <label>Cooperative Society*</label>
-                                    <select name="cooperative" id="cooperative" class="form-control" data-parsley-id="4"
-                                        required="">
-                                        <option value="">-Choose Cooperative-</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-sm-2"></div>
-                            <div class="col-md-5 col-sm-5">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="text-right">
-                                <input type="hidden" name="status" id="status" value="">
-                                <input type="hidden" name="id" id="id" value="">
-                                <button type="submit" id="submit-btn" data-form-name="settings_factory"
-                                    class="btn btn-space btn-primary">Submit</button>
-                                <button type="reset" class="btn btn-space btn-default"
-                                    style="visibility: hidden;">Cancel</button>
-                                <button type="button" id="delete-btn" data-form-name="settings_factory"
-                                    class="btn btn-space btn-active">Delete</button>
-                            </div>
-                        </div>
-                </div>
-                </form>
             </div>
         </div>
-    </div>
-    <div class="col-md-2 col-sm-2"></div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-xl-2"></div>
+            <div class="col-xl-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Factory Information</h4>
+                        <form id="settings_form" class="custom-validation" action="" method="post">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="mb-3">
+                                        <label>Factory Name*</label>
+                                        <input type="text" name="name" id="name" parsley-trigger="change" required=""
+                                            placeholder="Enter Factory Name" title="Enter Factory Name."
+                                            autocomplete="off" class="form-control" data-parsley-id="4">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="mb-3">
+                                        <label>Product*</label>
+                                        <select name="product" id="product" class="form-control" data-parsley-id="4"
+                                            required="">
+                                            <option value="" selected>-Choose Product-</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="mb-3">
+                                        <label>Cooperative Society*</label>
+                                        <select name="cooperative" id="cooperative" class="form-control"
+                                            data-parsley-id="4" required="">
+                                            <option value="" selected>-Choose Cooperative-</option>
+                                        </select>
+                                        <input type="hidden" name="id" id="id" value="">
+                                        <input type="hidden" name="status" id="status" value="Active">
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="float-end">
+                                    <button type="submit" id="submit-btn" data-form-name="settings_factory"
+                                    class="btn btn-primary waves-effect waves-light me-1">Submit</button>
+                                  <button type="button" id="delete-btn" data-form-name="settings_factory"
+                                    class="btn btn-warning waves-effect waves-light me-1">Delete</button>
+                                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-2"></div>
+        </div>
+
+    </div> <!-- container-fluid -->
 </div>
-</div>
+<!-- End Page-content -->
+
 {% endblock %}
 {% block datatable_scripts %}
-<script src="{% static 'KiloSahihi/assets/lib/parsley/parsley.min.js' %}" type="text/javascript"></script>
+<!-- parsleyjs -->
+<script src="{% static 'KiloSahihi/assets/libs/parsleyjs/parsley.min.js' %}"></script>
+<script src="{% static 'KiloSahihi/assets/js/pages/form-validation.init.js' %}"></script>
 <script src="{% static 'KiloSahihi/assets/js/settings.js' %}" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        //initialize the javascript
-        App.init();
-        // var reg_form = $('#settings_form').parsley();
         getOptionsList("cooperative", "cooperative")
         getOptionsList("product", "product")
         setTimeout(function () {

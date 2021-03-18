@@ -18,7 +18,7 @@ getheaders.append("Content-Type", "application/json");
 
 let userinfo = JSON.parse(localStorage.session_user);
 
-console.log("Authorization", "Token " + localStorage.session_token);
+// console.log("Authorization", "Token " + localStorage.session_token);
 
 /**
  * Returns a random number between min (inclusive) and max (exclusive)
